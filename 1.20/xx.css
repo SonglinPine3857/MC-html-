@@ -1,0 +1,48 @@
+
+        .titlee{
+            background-color: white;
+            /* line-height: 50px; */
+            text-align: left;
+            font-weight: 700px;
+            font-size: 50px;
+            text-indent: 50px;
+            font-family:宋体
+        }
+        .img{
+            text-align: center;
+            
+        }
+        .table_things{
+            /* display:flex;
+            flex:1;
+            flex-direction: center;
+            align-items: center;
+            justify-content: center;
+            align-content: center;  */
+            font-size:100px;
+            color:white
+        }
+        .normal_sentence{
+            font-size: 100px;
+            color:white;
+            text-decoration: none;
+        }
+        .touched_sentence{
+            font-size: 100px;
+            color:black;
+            background-color: darkgreen;
+            text-decoration: none;
+        }
+
+
+
+        .paragraph{
+            text-indent: 2em;
+            font-size:30px;
+            font-family:Microsoft YaHei;
+        }
+        .paragraph2{
+            text-indent:3em;
+            font-size:20px;
+            font-family:Microsoft YaHei;
+        }
