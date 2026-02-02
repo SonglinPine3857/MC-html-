@@ -1,0 +1,90 @@
+body {
+    background-color: #f3f5f7;
+}
+
+* {
+    text-decoration: none;
+    color: black;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.middle {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    /* flex-wrap: wrap; */
+}
+
+.middle .block {
+    display: flex;
+    height: 80px;
+    width: 200px;
+}
+
+/* Head */
+.head {
+    background-color: #0066cc;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo a {
+    margin-left: 20px;
+    font-size: 50px;
+    font-family: Microsoft YaHei;
+    color: white;
+
+    background-image: url("#");
+}
+
+.navigation {
+    color: whitesmoke;
+    margin-top: auto;
+    /*将字体推到底部*/
+
+}
+
+
+
+.navigation a {
+    color: white;
+    margin-left: 10px;
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: 3px solid white;
+}
+
+.navigation span:last-child a {
+    border-right: 0;
+}
+
+.navigation .active,
+.navigation a:hover {
+    color: black;
+    transition: all 1s;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.touch {
+    color: black;
+}
+
+.biaoti {
+    font-size: 60px;
+    font-family: Minecraft;
+    margin-left: 1em;
+    margin-top: 20px;
+}
+
+.bottom {
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+}

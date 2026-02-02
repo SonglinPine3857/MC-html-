@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  .box {
+    display: flex;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    height: 300px;
+    width: 700px;
+    justify-content: space-around;
+    align-items: flex-end;
+
+    /* 水平居中 */
+  }
+
+  .box {
+    /*box 里的div固定样式*/
+    color: black;
+    background-color: yellow;
+  }
+
+  .table {
+    /*让某些div有.table类*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60px;
+  }
+
+  .top {
+    order: 1;
+    margin-bottom: 5px;
+  }
+
+  .bar {
+    order: 2;
+    width: 40px;
+    background-color: yellow;
+  }
+
+  .bottom {
+    order: 3;
+    margin-top: 5px;
+  }
+</style>
+
+<body>
+  <div class="box">
+    <div class="table" style="height: 200px;">
+      <div class="top">123</div>
+    </div>
+    <div class="bar" style="height: 200px;"></div>
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <table style="border: 1px solid black;">
+    <tr style="border: 1px solid black;">
+      <th style="border: 1px solid black;"></th>
+      <th style="border: 1px solid black;">name</th>
+      <th style="border: 1px solid black;">age</th>
+      <th style="border: 1px solid black;">gender</th>
+      <th style="border: 1px solid black;">hometown</th>
+    </tr>
+    <script>
+      let students = [
+        { name: 'a', age: 18, gender: 'mu', hometown: 'hulei' },
+        { name: 'b', age: 18, gender: 'mu', hometown: 'hulei' },
+        { name: 'c', age: 18, gender: 'mu', hometown: 'hulei' },
+        { name: 'd', age: 18, gender: 'mu', hometown: 'hulei' }
+      ]
+      for (let i = 0; i < students.length; i++) {
+        // console.log(students[i].name)
+        document.write(`
+          <tr style="border: 1px solid black;">
+            <td style="border: 1px solid black;">${i + 1}</td>
+            <td style="border: 1px solid black;">${students[i].name}</td>
+            <td style="border: 1px solid black;">${students[i].age}</td>
+            <td style="border: 1px solid black;">${students[i].gender}</td>
+            <td style="border: 1px solid black;">${students[i].hometown}</td>
+          </tr>
+        `)
+      }
+    </script>
+  </table>
+</body>
+
+</html>

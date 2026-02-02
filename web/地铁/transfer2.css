@@ -1,0 +1,21 @@
+/*底部*/
+
+
+.bottom{
+        display: flex;
+        list-style: none;
+        justify-content: center;
+        flex:1;
+        height: 50px;
+        background-color: rgb(170, 169, 169);
+        color:rgb(41, 41, 41);
+        margin: 0;
+        padding: 0px;
+        block-size: border-box;
+        font-family: Microsoft YaHei;
+}
+
+.center{
+    text-align: center;
+    font-size: 8px;
+}

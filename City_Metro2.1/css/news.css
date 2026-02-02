@@ -1,0 +1,29 @@
+a .news {
+  /* height: 30px; */
+  font-family: 宋体;
+  display: flex;
+  flex: 1;
+  /* justify-content: space-between; */
+  /* align-content: center; */
+  /* border: 1px solid white; */
+  padding-left: 50px;
+
+}
+
+a .news .block {
+  height: 20px;
+  width: 20px;
+  background-color: rgb(244, 181, 63);
+}
+
+a .news .text:hover {
+  font-size: 20px;
+  /* text-indent: 2em; */
+  color: red;
+  font-family: 宋体;
+  /* text-decoration: underline; */
+}
+
+a .news .text {
+  padding-left: 75px;
+}

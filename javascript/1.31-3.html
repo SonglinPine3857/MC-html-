@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    let timerId = 0
+    let random = 0
+    const arr = [11, 12, 13, 14, 15]
+    const qs = document.querySelector('.qs')
+    const start = document.querySelector('.start')
+    start.addEventListener('click', function () {
+      timerId = setInterval(function () {
+        const random = parseInt(Math.random() * arr.length)
+        console.log(arr[random]);
+        qs.innerHTML = arr[random]
+      }, 35)
+    })
+
+    if (arr.length === 1) {
+      start.disabled = true
+      end.disabled = true
+    }
+
+
+    //2.
+    const end = document.querySelector('.end')
+    end.addEventListener('click', function () {
+      clearInterval(timerId)
+      arr.splice(random, 1)
+      console.log(arr);
+
+    })
+  </script>
+</body>
+
+</html>

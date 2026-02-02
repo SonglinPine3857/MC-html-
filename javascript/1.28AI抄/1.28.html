@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <!-- 
+        HTML头部 - 定义网页基本信息和引入样式
+        charset="UTF-8" 确保中文正确显示
+        viewport 让网页适配手机屏幕
+        title 是浏览器标签页显示的标题
+    -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>简单待办清单</title>
+
+  <style>
+    /* 
+            CSS样式部分 - 控制网页的外观
+            格式：选择器 { 属性: 值; }
+        */
+
+    /* 全局重置 - 清除浏览器默认样式 */
+    * {
+      margin: 0;
+      /* 外边距归零 */
+      padding: 0;
+      /* 内边距归零 */
+      box-sizing: border-box;
+      /* 盒模型设置，让宽高包含padding和border */
+    }
+
+    /* body标签样式 - 整个页面的背景和文字 */
+    body {
+      font-family: Arial, sans-serif;
+      /* 字体设置 */
+      background-color: #f5f5f5;
+      /* 浅灰色背景 */
+      padding: 20px;
+      /* 页面四周留白 */
+    }
+
+    /* 主容器 - 居中显示内容区域 */
+    .container {
+      max-width: 600px;
+      /* 最大宽度600像素 */
+      margin: 0 auto;
+      /* 上下0，左右自动（居中） */
+      background: white;
+      /* 白色背景 */
+      border-radius: 10px;
+      /* 圆角边框 */
+      padding: 20px;
+      /* 内边距 */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      /* 阴影效果 */
+    }
+
+    /* 标题样式 */
+    h1 {
+      text-align: center;
+      /* 文字居中 */
+      color: #333;
+      /* 深灰色文字 */
+      margin-bottom: 20px;
+      /* 下边距 */
+    }
+
+    /* 输入区域样式 */
+    .input-area {
+      display: flex;
+      /* 弹性盒子布局 */
+      margin-bottom: 20px;
+      /* 下边距 */
+    }
+
+    /* 输入框样式 */
+    #taskInput {
+      flex: 1;
+      /* 占据剩余空间 */
+      padding: 10px;
+      /* 内边距 */
+      border: 2px solid #ddd;
+      /* 边框 */
+      border-radius: 5px;
+      /* 圆角 */
+      font-size: 16px;
+      /* 字体大小 */
+    }
+
+    /* 输入框获得焦点时的样式 */
+    #taskInput:focus {
+      outline: none;
+      /* 去掉默认外边框 */
+      border-color: #4CAF50;
+      /* 绿色边框 */
+    }
+
+    /* 按钮通用样式 */
+    button {
+      padding: 10px 20px;
+      /* 内边距 */
+      border: none;
+      /* 无边框 */
+      border-radius: 5px;
+      /* 圆角 */
+      cursor: pointer;
+      /* 鼠标指针变成手型 */
+      font-size: 16px;
+      /* 字体大小 */
+      margin-left: 10px;
+      /* 左边距 */
+    }
+
+    /* 添加按钮特定样式 */
+    #addBtn {
+      background-color: #4CAF50;
+      /* 绿色背景 */
+      color: white;
+      /* 白色文字 */
+    }
+
+    /* 清除按钮特定样式 */
+    #clearBtn {
+      background-color: #f44336;
+      /* 红色背景 */
+      color: white;
+      /* 白色文字 */
+    }
+
+    /* 任务列表样式 */
+    #taskList {
+      list-style: none;
+      /* 去掉列表前的圆点 */
+    }
+
+    /* 单个任务项样式 */
+    .task-item {
+      background-color: #f9f9f9;
+      /* 浅灰色背景 */
+      padding: 12px;
+      /* 内边距 */
+      margin-bottom: 8px;
+      /* 下边距 */
+      border-radius: 5px;
+      /* 圆角 */
+      display: flex;
+      /* 弹性盒子布局 */
+      align-items: center;
+      /* 垂直居中 */
+      justify-content: space-between;
+      /* 两端对齐 */
+    }
+
+    /* 鼠标悬停在任务项上的效果 */
+    .task-item:hover {
+      background-color: #f0f0f0;
+      /* 稍微深一点的背景色 */
+    }
+
+    /* 已完成任务项的样式 */
+    .completed {
+      text-decoration: line-through;
+      /* 删除线效果 */
+      color: #888;
+      /* 灰色文字 */
+    }
+
+    /* 任务文本样式 */
+    .task-text {
+      flex: 1;
+      /* 占据剩余空间 */
+      margin: 0 10px;
+      /* 左右边距 */
+    }
+
+    /* 删除按钮样式 */
+    .delete-btn {
+      background-color: #ff5555;
+      /* 红色背景 */
+      color: white;
+      /* 白色文字 */
+      padding: 5px 10px;
+      /* 内边距 */
+      border-radius: 3px;
+      /* 小圆角 */
+      font-size: 14px;
+      /* 较小字体 */
+    }
+
+    /* 空状态提示样式 */
+    #emptyMessage {
+      text-align: center;
+      /* 文字居中 */
+      color: #888;
+      /* 灰色文字 */
+      padding: 20px;
+      /* 内边距 */
+      display: none;
+      /* 默认隐藏 */
+    }
+
+    /* 任务统计样式 */
+    #taskStats {
+      text-align: center;
+      /* 文字居中 */
+      color: #666;
+      /* 中灰色文字 */
+      margin-top: 20px;
+      /* 上边距 */
+      font-size: 14px;
+      /* 较小字体 */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 
+        HTML主体部分 - 用户看到的内容
+        结构：容器 > 标题 > 输入区 > 列表 > 统计
+    -->
+  <div class="container">
+    <h1>📝 我的待办清单</h1>
+
+    <!-- 输入区域：输入框 + 添加按钮 + 清除按钮 -->
+    <div class="input-area">
+      <input type="text" id="taskInput" placeholder="输入新任务...">
+      <button id="addBtn">添加</button>
+      <button id="clearBtn">清除所有</button>
+    </div>
+
+    <!-- 任务列表区域 -->
+    <ul id="taskList">
+      <!-- 列表项将通过JavaScript动态添加 -->
+    </ul>
+
+    <!-- 空状态提示：当没有任务时显示 -->
+    <div id="emptyMessage">
+      还没有任务，添加一个吧！
+    </div>
+
+    <!-- 任务统计区域 -->
+    <div id="taskStats">
+      总任务数: <span id="totalCount">0</span> |
+      已完成: <span id="completedCount">0</span>
+    </div>
+  </div>
+
+  <script>
+    // ============================================
+    // JavaScript部分 - 实现网页的交互功能
+    // ============================================
+
+    // 1. 获取DOM元素（找到HTML中的元素）
+    // --------------------------------------------------
+    const taskInput = document.getElementById('taskInput');  // 输入框
+    const addBtn = document.getElementById('addBtn');        // 添加按钮
+    const clearBtn = document.getElementById('clearBtn');    // 清除按钮
+    const taskList = document.getElementById('taskList');    // 任务列表
+    const emptyMessage = document.getElementById('emptyMessage'); // 空提示
+    const totalCount = document.getElementById('totalCount');     // 总任务数显示
+    const completedCount = document.getElementById('completedCount'); // 已完成显示
+
+    // 2. 定义任务数组 - 用来存储所有任务
+    // --------------------------------------------------
+    let tasks = [];  // 创建一个空数组
+
+    // 3. 添加任务功能
+    // --------------------------------------------------
+    function addTask() {
+      // 获取输入框的值并去除首尾空格
+      const taskText = taskInput.value.trim();
+
+      // 检查输入是否为空
+      if (taskText === '') {
+        alert('请输入任务内容！');  // 弹出提示框
+        taskInput.focus();          // 让输入框获得焦点
+        return;                     // 结束函数执行
+      }
+
+      // 创建任务对象
+      const newTask = {
+        id: Date.now(),          // 用时间戳作为唯一ID
+        text: taskText,          // 任务文本
+        completed: false         // 完成状态（默认未完成）
+      };
+
+      // 将新任务添加到数组
+      tasks.push(newTask);
+
+      // 保存到本地存储
+      saveTasks();
+
+      // 更新显示
+      renderTasks();
+
+      // 清空输入框并聚焦
+      taskInput.value = '';
+      taskInput.focus();
+    }
+
+    // 4. 删除任务功能
+    // --------------------------------------------------
+    function deleteTask(id) {
+      // 询问用户是否确认删除
+      if (confirm('确定要删除这个任务吗？')) {
+        // 过滤数组，只保留id不匹配的任务
+        tasks = tasks.filter(task => task.id !== id);
+
+        // 保存到本地存储
+        saveTasks();
+
+        // 更新显示
+        renderTasks();
+      }
+    }
+
+    // 5. 切换任务完成状态
+    // --------------------------------------------------
+    function toggleTask(id) {
+      // 遍历任务数组，找到对应id的任务
+      tasks = tasks.map(task => {
+        if (task.id === id) {
+          // 切换完成状态
+          return { ...task, completed: !task.completed };
+        }
+        return task;
+      });
+
+      // 保存到本地存储
+      saveTasks();
+
+      // 更新显示
+      renderTasks();
+    }
+
+    // 6. 渲染任务列表（在页面上显示任务）
+    // --------------------------------------------------
+    function renderTasks() {
+      // 清空当前列表内容
+      taskList.innerHTML = '';
+
+      // 如果任务数组为空，显示空状态提示
+      if (tasks.length === 0) {
+        emptyMessage.style.display = 'block';  // 显示空提示
+      } else {
+        emptyMessage.style.display = 'none';   // 隐藏空提示
+
+        // 遍历所有任务，创建列表项
+        tasks.forEach(task => {
+          // 创建列表项元素
+          const li = document.createElement('li');
+          li.className = 'task-item';  // 添加CSS类名
+
+          // 如果任务已完成，添加completed类
+          if (task.completed) {
+            li.classList.add('completed');
+          }
+
+          // 设置列表项的内容
+          li.innerHTML = `
+                        <input type="checkbox" ${task.completed ? 'checked' : ''}>
+                        <span class="task-text">${task.text}</span>
+                        <button class="delete-btn">删除</button>
+                    `;
+
+          // 获取子元素
+          const checkbox = li.querySelector('input[type="checkbox"]');
+          const deleteBtn = li.querySelector('.delete-btn');
+
+          // 为复选框添加点击事件
+          checkbox.addEventListener('click', () => {
+            toggleTask(task.id);
+          });
+
+          // 为删除按钮添加点击事件
+          deleteBtn.addEventListener('click', () => {
+            deleteTask(task.id);
+          });
+
+          // 将列表项添加到列表中
+          taskList.appendChild(li);
+        });
+      }
+
+      // 更新统计信息
+      updateStats();
+    }
+
+    // 7. 更新统计信息
+    // --------------------------------------------------
+    function updateStats() {
+      // 计算总任务数
+      const total = tasks.length;
+
+      // 计算已完成任务数（筛选completed为true的任务）
+      const completed = tasks.filter(task => task.completed).length;
+
+      // 更新显示
+      totalCount.textContent = total;
+      completedCount.textContent = completed;
+    }
+
+    // 8. 保存任务到本地存储
+    // --------------------------------------------------
+    function saveTasks() {
+      // 将任务数组转换成JSON字符串，保存到localStorage
+      localStorage.setItem('myTasks', JSON.stringify(tasks));
+    }
+
+    // 9. 从本地存储加载任务
+    // --------------------------------------------------
+    function loadTasks() {
+      // 从localStorage获取保存的任务数据
+      const savedTasks = localStorage.getItem('myTasks');
+
+      // 如果有保存的数据，解析并加载
+      if (savedTasks) {
+        tasks = JSON.parse(savedTasks);
+        renderTasks();  // 渲染加载的任务
+      }
+    }
+
+    // 10. 清除所有任务
+    // --------------------------------------------------
+    function clearAllTasks() {
+      // 确认用户是否真的要清除所有任务
+      if (tasks.length > 0 && confirm('确定要清除所有任务吗？')) {
+        tasks = [];              // 清空任务数组
+        saveTasks();             // 保存到本地存储
+        renderTasks();           // 重新渲染（会显示空状态）
+      }
+    }
+
+    // 11. 添加事件监听器
+    // --------------------------------------------------
+
+    // 页面加载完成后执行
+    document.addEventListener('DOMContentLoaded', () => {
+      loadTasks();  // 加载保存的任务
+    });
+
+    // 点击添加按钮时添加任务
+    addBtn.addEventListener('click', addTask);
+
+    // 按回车键也可以添加任务
+    taskInput.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        addTask();
+      }
+    });
+
+    // 点击清除按钮清除所有任务
+    clearBtn.addEventListener('click', clearAllTasks);
+
+    // 12. 添加一些示例任务（仅第一次使用时）
+    // --------------------------------------------------
+    if (localStorage.getItem('myTasks') === null) {
+      tasks = [
+        { id: 1, text: '学习HTML基础', completed: true },
+        { id: 2, text: '学习CSS样式', completed: false },
+        { id: 3, text: '学习JavaScript交互', completed: false }
+      ];
+      saveTasks();
+      renderTasks();
+    }
+  </script>
+</body>
+
+</html>

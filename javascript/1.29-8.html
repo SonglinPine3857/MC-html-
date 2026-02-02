@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function getRandom(N, M) {
+      return Math.floor(Math.random() * (M - N + 1)) + N
+    }
+    let random = getRandom(1, 10)
+    let flag = true
+    for (let i = 1; i <= 3; i++) {
+      let num = + prompt('input')
+      if (num > random) {
+        alert('big')
+      }
+      else if (num < random) {
+        alert('small')
+      }
+      else {
+        flag = false
+        alert('right')
+        break
+      }
+    }
+    if (flag) {
+      alert('out')
+    }
+
+
+  </script>
+</body>
+
+</html>

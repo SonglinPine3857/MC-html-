@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>我的任务管理器</title>
+  <link rel="stylesheet" href="./1.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>我的待办清单</h1>
+    <div class="input-area">
+      <input type="text" id="taskInput" placeholder="输入新任务...">
+      <button id="addBtn">添加</button>
+      <button id="clearBtn">清除所有</button>
+    </div>
+    <ul id="taskList">
+      <!-- 列表通过js动态添加 -->
+    </ul>
+    <div class="emptyMessage">
+      还没有任务，添加一个吧！
+    </div>
+    <div class="taskStats">
+      总任务数:<span id="totalCount">0</span> |
+      已完成:<span id="completedCount">0</span>
+    </div>
+  </div>
+
+  <script>
+    const taskInput = document.getElementById('taskInput');
+    const addBtn = document.getElementById('addBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const taskList = document.getElementById('taskList');
+    const emptyMessage = document.getElementById('emptyMessage');
+    const totalCount = document.getElementById('totalCount');
+    const completedCount = document.getElementById('completedCount');
+
+    let tasks = [];
+
+    function addTask() {
+      const taskText = taskInput.value.trim();
+
+      if (taskText === '') {
+        alert('请输入任务内容！');
+        taskInput.focus();
+        return;
+      }
+
+      const newTask = {
+        id: Date.now(),
+        text: taskText,
+        completed: false
+      };
+
+      tasks.push(newTask);
+
+      savedTasks();
+
+      renderTasks();
+
+      taskInput.value = '';
+      taskInput.focus();
+    }
+
+    function deleteTask(id) {
+      if (confirm('确定要删除这个任务吗?')) {
+        tasks = tasks.filter(task => task.id !== id);
+
+        savedTasks();
+        renderTasks();
+      }
+    }
+
+    function toggleTask(id) {
+      tasks = tasks.map(task => {
+        if (task.id === id) {
+          return { ...task, completed: !task.completed };
+        }
+        return task;
+      });
+
+      saveTasks();
+      renderTasks();
+    }
+
+    function renderTasks() {
+      taskList.innerHTML = '';
+
+      if (tasks.length === 0) {
+        emptyMessage.style.display = 'block';
+      } else {
+        emptyMessage.style.display = 'none';
+
+        tasks.forEach(task => {
+          const li = document.createElement('li');
+          li.className = 'task-item'; // 添加CSS类名
+
+          if (task.completed) {
+            li.classList.add('completed');
+          }
+
+          li.innerHTML = `
+            <input type="checkbox" ${task.completed ? 'checked' : ''}>
+            <span class="task-text">${task.text}</span>
+            <button class="delete-btn">删除</button>
+          `;
+
+          const checkbox = li.querySelector('input[type="checkbox"]');
+          const deleteBtn = li.querySelector('.delete-btn');
+
+          checkbox.addEventListener('click', () => {
+            toggleTask(task.id);
+          });
+
+          deleteBtn.addEventListener('click', () => {
+            deleteTask(task.id);
+          });
+
+          taskList.appendChild(li);
+        });
+      }
+      updateStats();
+    }
+
+    function updateStats() {
+      const total = tasks.length;
+
+      const completed = tasks.filter(task => task.completed).length;
+
+      totalCount.textContent = total;
+      completedCount.textContent = completed;
+    }
+
+    function savedTasks() {
+      localStorage.setItem('myTasks', JSON.stringify(tasks));
+    }
+
+    function loadTasks() {
+      const savedTasks = localStorage.getItem('myTasks');
+
+      if (saveTasks) {
+        tasks = JSON.parse(saveTasks);
+        renderTasks();
+      }
+    }
+
+    function clearAllTasks() {
+      if (tasks.length > 0 && confirm('确定要清除所有任务吗？')) {
+        tasks = [];
+        saveTasks();
+        renderTasks();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadTasks();
+    });
+
+    addBtn.addEventListener('click', addTask);
+    taskInput.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        addTask();
+      }
+    });
+
+    clearBtn.addEventListener('click', clearAllTasks);
+
+    if (localStorage.getItem('myTasks') === null) {
+      tasks = [
+        { id: 1, text: 'HTML', completed: true },
+        { id: 2, text: 'CSS', completed: false },
+        { id: 3, text: 'JS', completed: false },
+      ];
+      saveTasks();
+      renderTasks();
+    }
+  </script>
+</body>
+
+</html>

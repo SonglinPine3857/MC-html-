@@ -1,0 +1,31 @@
+.picture {
+  display: flex;
+  justify-content: center;
+}
+
+.neirong {
+  margin: 30px;
+  text-indent: 2em;
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+}
+
+.show {
+  width: auto;
+  height: 1000px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 30px;
+  font-family: Microsoft YaHei;
+  text-indent: 2em;
+}
+
+.show .left {
+  width: 1300px;
+  border: 1px #dac814;
+}
+
+.show .right {
+  display: block;
+  /* width: 250px; */
+}
